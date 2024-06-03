@@ -20,8 +20,10 @@ import cv2
 
 import matplotlib.pyplot as plt
 
+#import imageio.v3 as imageio
+#from PIL import Image
 from PIL import Image
-import imageio
+import pip
 
 
 def nombres(directorio):
@@ -34,12 +36,26 @@ def nombres(directorio):
 
 
 def convertir_heic_a_jpg(ruta_entrada, ruta_salida):
+    
+    # Registra el plugin HEIF con PIL
+    pillow_heif.register_heif_opener()
+    
     try:
         # Lee la imagen HEIC
-        imagen_heic = imageio.imread(ruta_entrada)
+        #imagen_heic = imageio.imread(ruta_entrada)
         # Guarda la imagen como JPEG
-        imageio.imwrite(ruta_salida, imagen_heic)
-        print("La conversión se ha realizado con éxito.")
+        #imageio.imwrite(ruta_salida, imagen_heic)
+        #imageio.imwrite('../Nuestras Caras/Abel/conv.jpg',imagen_heic)
+        #imagen_pil = Image.fromarray(imagen_heic)
+        #imagen_pil.save('ruta_salida','JPEG')
+        imagen_heic = Image.open(ruta_entrada)
+    
+        # Guarda la imagen en formato JPG
+        imagen_heic.save(ruta_salida)
+
+        print("La conversión fue exitosa.")
+
+        #print("La conversión se ha realizado con éxito.")
     except Exception as e:
         print(f"Error al convertir la imagen: {e}")
 
