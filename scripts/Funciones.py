@@ -1,4 +1,4 @@
-
+#importamos 
 import imageio
 import numpy as np
 
@@ -26,6 +26,9 @@ import imageio
 
 
 def nombres(directorio):
+    """
+    Obtenemos los nombres de las personas a partir de la estructura dle directorio, cada carpeta una persona
+    """
     names = []
     for dir in os.listdir(directorio):
         names.append(dir)
@@ -33,11 +36,11 @@ def nombres(directorio):
     return names
 
 
-
-#from PIL import Image
-#import imageio
-
 def convertir_heic_a_jpg(ruta_entrada, ruta_salida):
+    """
+    intenta convertir una imagen en Formato heic a jpg y 
+    la almacena en la ruta de salida, con el mismo nombre de archivo.
+    """
     try:
         # Lee la imagen HEIC
         imagen_heic = imageio.imread(ruta_entrada)  
@@ -48,6 +51,10 @@ def convertir_heic_a_jpg(ruta_entrada, ruta_salida):
         print(f"Error al convertir la imagen: {e}")
 
 def convertir_persona_HIEC_a_jpg(ruta_persona):
+    """
+    para cada archivo, en la ruta recibida, con formato hiec crea uno con formato jpg en la misma ruta.
+    
+    """
 
     for archivo_hiec in glob.glob(os.path.join(ruta_persona, "*.HEIC")):
         
@@ -58,11 +65,14 @@ def convertir_persona_HIEC_a_jpg(ruta_persona):
                
 
 def Leer_fotos(directorio_origen_f):
+    """
+        Lee la ruta lee interpretando que cada carpeta es una persona, y dentro de esa careta se encuentran las fotos de esa persona.
+        Devuelve un diccionario con el nombre de la pesrona como índice y una lista de sus fotos.
+    """
+
     # Diccionario para almacenar las fotos
     fotos_int= {} # diccionario interno q sea persona y el vector de fotos, 
-    #despues elegimos una de las dos estructuras
-    #v_fotos_personas =[] #este vector tendra todas las fotos
-    #v_nombre_personas = [] #este vector tendra el nombre de la persona, forrespondiente a la foto del vetor fotos_persona en la misma posicion
+
     # Recorrer las subcarpetas
 
     for nombre_persona in os.listdir(directorio_origen_f):
@@ -77,17 +87,20 @@ def Leer_fotos(directorio_origen_f):
         for archivo in glob.glob(os.path.join(ruta_persona, "*.jpg")) :
             # Cargar la imagen
             imagen = cv2.imread(archivo)              
-            fotos_persona.append(imagen)
-            #v_fotos_personas.append(imagen)
-            #_nombre_personas.append(nombre_persona)
-            # Agregar las fotos de la persona al diccionario
+            fotos_persona.append(imagen)             
         fotos_int[nombre_persona] = fotos_persona
+        
     return fotos_int
 
 
 
-
 def show_people(images):
+    """
+        Muestra una foto por persona.
+        Recibe un diccionario con la persona como indice y una lista de sus fotos.
+        
+    """
+    
     names_target = list(images.keys())
 
     rows = 5
@@ -114,6 +127,12 @@ def show_people(images):
     
     
 def show_people_agg_cant(dfotos, cant):
+    
+    """
+        Muestra cantidad variable (recibida como parametro) de fotos por persona.
+        Recibe un diccionario dfotos con la persona como indice y una lista de sus fotos.
+        
+    """
     #Visualizacion de "cant"  imagenes por cada alumno
     n_pics_per_person = cant
     n_cols = n_pics_per_person
