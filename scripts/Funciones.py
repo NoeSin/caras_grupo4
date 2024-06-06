@@ -22,8 +22,10 @@ import cv2
 import matplotlib.pyplot as plt
 
 from PIL import Image
-import imageio
 
+
+
+from Importar_Instalar import check_and_install
 
 def nombres(directorio):
     """
@@ -41,6 +43,8 @@ def convertir_heic_a_jpg(ruta_entrada, ruta_salida):
     intenta convertir una imagen en Formato heic a jpg y 
     la almacena en la ruta de salida, con el mismo nombre de archivo.
     """
+    
+    check_and_install ("imageio") 
     try:
         # Lee la imagen HEIC
         imagen_heic = imageio.imread(ruta_entrada)  
