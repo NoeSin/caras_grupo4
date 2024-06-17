@@ -159,3 +159,38 @@ def show_people_agg_cant(dfotos, cant):
         
         axs[index, 0].set_title(nombre)
         index += 1
+
+
+def matriz_fotos_desde_carpeta(dir_name_recorte ):
+    import os
+    # Tamaño fijo al que redimensionar todas las imágenes
+    desired_size = (30, 30)
+    x= a
+    # Listas para almacenar las imágenes y sus nombres
+    images = [] #lista de fotos
+    image_names = []
+    image_person = [] #lista con los nombres de las personas de cada foto
+
+    # Leer las imágenes del directorio y almacenarlas en las listas
+    images = []
+    for root, dirs, files in XX.walk(dir_name_recorte):
+        for dir_name in dirs:
+            print("Carpeta:", dir_name)
+            dir_path = os.path.join(root, dir_name) #directorio  de la persona
+
+            for file_name in os.listdir(dir_path):
+
+                if file_name.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp')):
+                    image_path = os.path.join(dir_path, file_name)
+                    image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)  # Leer en escala de grises
+                if image is not None:
+                    # Redimensionar la imagen al tamaño deseado
+                    resized_image = cv2.resize(image, desired_size)
+
+                    images.append(resized_image.flatten())  # Aplanar la imagen y agregarla a la lista
+                    image_names.append(file_name)
+                    image_person.append(dir_name)
+
+    # Convertir la lista de imágenes a una matriz NumPy
+    image_matrix = np.array(images) #matriz de fotos    
+    return image_matrix
