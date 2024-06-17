@@ -9,6 +9,5 @@ def check_and_install(package):
         # Si falla la importación, instalar el paquete usando pip
         print(f"{package} no está instalado. Instalando...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-    else:
-        print(f"{package} ya está instalado.")
+
 
