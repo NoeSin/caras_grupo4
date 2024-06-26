@@ -1,4 +1,12 @@
 def matriz_fotos_desde_carpeta(dir_name_recorte ):
+    """
+        Funcion, a partir de un directorio, busca cada carpeta en el directorio la interpreta como el nombre de la persona,
+                cada imagen dentro de esa carpeta la aplana y la agrea a una matriz.
+                La funcion devuelve image_matrix, la matriz  de todas las fotos vectorizadas 
+                (al ser fotos de 30*30 se obtienen en un vector de 900 pixeles)
+                tambien de vuelve un vector: image_person con el nombre de la persona de cada foto 
+                (un item por cada fila de la matriz de fotos)
+    """
     import os
     import cv2
     import numpy as np
@@ -32,7 +40,7 @@ def matriz_fotos_desde_carpeta(dir_name_recorte ):
                                    
     # Convertir la lista de imágenes a una matriz NumPy
     image_matrix = np.array(images) #matriz de fotos    
-    return image_matrix
+    return image_matrix, image_person
 
 def Aplicar_PCA_Matriz_fotos(image_matrix, num_components, corrimiento =0):
     """
