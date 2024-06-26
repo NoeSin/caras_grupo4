@@ -165,7 +165,6 @@ def matriz_fotos_desde_carpeta(dir_name_recorte ):
     import os
     # Tamaño fijo al que redimensionar todas las imágenes
     desired_size = (30, 30)
-    x= a
     # Listas para almacenar las imágenes y sus nombres
     images = [] #lista de fotos
     image_names = []
@@ -173,7 +172,7 @@ def matriz_fotos_desde_carpeta(dir_name_recorte ):
 
     # Leer las imágenes del directorio y almacenarlas en las listas
     images = []
-    for root, dirs, files in XX.walk(dir_name_recorte):
+    for root, dirs, files in os.walk(dir_name_recorte):
         for dir_name in dirs:
             print("Carpeta:", dir_name)
             dir_path = os.path.join(root, dir_name) #directorio  de la persona
