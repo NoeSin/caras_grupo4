@@ -67,7 +67,6 @@ __variables:__
 * __names__ : array con el nombre de las personas
 * __image_matrix__: matriz de (cantFotos X 900) contiene un renglon por cada foto aplanada en un vector.
 *__projected_images__: las imagenes proyectadas por las 900 componentes pca.
-*__
 
 Ademas en este notebook se realiza PCA para obtener las componentes principals de las fotos.
 Esto se obtiene de dos maneras,  paso a paso con multiplicacion de matrices y otra de las formas fue utilizando la libreria sklearn.
