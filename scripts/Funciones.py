@@ -193,3 +193,28 @@ def matriz_fotos_desde_carpeta(dir_name_recorte ):
     # Convertir la lista de imágenes a una matriz NumPy
     image_matrix = np.array(images) #matriz de fotos    
     return image_matrix
+
+
+
+
+
+def recortar_imagen(image):
+    import os
+    import cv2
+    import matplotlib.pyplot as plt
+    # Convertir la imagen a escala de grises
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    # Utilizar un clasificador específico para caras
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_alt.xml")
+
+    # Detectar rostros en la imagen
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=3, minSize=(30, 30))
+
+    # Recorrer las caras detectadas
+    face_images = []
+    for (x, y, w, h) in faces:
+        # Recortar la cara de la imagen
+        face_images.append(image[y:y+h, x:x+w])
+
+    return face_images
