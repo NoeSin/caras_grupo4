@@ -88,7 +88,7 @@ def Leer_fotos(directorio_origen_f):
         #convertir hiec a png
         convertir_persona_HIEC_a_jpg(ruta_persona)
         # Recorrer las fotos de la persona
-        for archivo in glob.glob(os.path.join(ruta_persona, "*.jpg")) :
+        for archivo in glob.glob(os.path.join(ruta_persona, "*.jp*g")) :
             # Cargar la imagen
             imagen = cv2.imread(archivo)              
             fotos_persona.append(imagen)             
