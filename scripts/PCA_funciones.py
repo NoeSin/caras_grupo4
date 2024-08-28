@@ -1,15 +1,19 @@
+import numpy as np
+import os
+import cv2
+import numpy as np
+
 def matriz_fotos_desde_carpeta(dir_name_recorte ):
     """
-        Funcion, a partir de un directorio, busca cada carpeta en el directorio la interpreta como el nombre de la persona,
-                cada imagen dentro de esa carpeta la aplana y la agrea a una matriz.
-                La funcion devuelve image_matrix, la matriz  de todas las fotos vectorizadas 
-                (al ser fotos de 30*30 se obtienen en un vector de 900 pixeles)
-                tambien de vuelve un vector: image_person con el nombre de la persona de cada foto 
-                (un item por cada fila de la matriz de fotos)
+        Funcion, a partir de un directorio, busca cada carpeta en el directorio la interpreta como 
+        el nombre de la persona,
+        cada imagen dentro de esa carpeta la aplana, la reduce a 30*30 y la agrea a una matriz.
+        La funcion devuelve image_matrix, la matriz  de todas las fotos vectorizadas 
+        (al ser fotos de 30*30 se obtienen en un vector de 900 pixeles)
+         tambien de vuelve un vector: image_person con el nombre de la persona de cada foto 
+        (un item por cada fila de la matriz de fotos)
     """
-    import os
-    import cv2
-    import numpy as np
+
 
     # Tamaño fijo al que redimensionar todas las imágenes
     desired_size = (30, 30)
@@ -69,3 +73,23 @@ def Aplicar_PCA_Matriz_fotos(image_matrix, num_components, corrimiento =0):
    
    
     return projected_images_reduced
+
+
+def transformar_imagen_pca(imagen, scaler, pca_components, num_componentes=50, inicio_componente=0):
+    """
+    # Función para transformar una imagen: 
+    #   1: La escala segun el scaler recibido como parametro
+    #   2: Aplica componentes recibidos como parametro, con un rango específico de componentes PCA recibido tambien en num_components
+    """
+
+    
+    
+    # Estandarizar la imagen
+    imagen_estandarizada = scaler.transform(imagen)
+    
+    # Seleccionar el rango de componentes
+    componentes_seleccionados = pca_components[inicio_componente:inicio_componente + num_componentes]
+    
+    # Realizar la proyección manualmente
+    imagen_pca = np.dot(imagen_estandarizada, componentes_seleccionados.T)
+    return imagen_pca
