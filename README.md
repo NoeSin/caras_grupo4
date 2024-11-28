@@ -2,9 +2,9 @@
 # Trabajo Práctico Final. Nuestras Caras
 
 ## Integrantes:
-Fierro, Abel
-Santesteban, Natalia
-Sincosky, Noelia
+* Fierro, Abel
+* Santesteban, Natalia
+* Sincosky, Noelia
 
 ## Workflow.
 
