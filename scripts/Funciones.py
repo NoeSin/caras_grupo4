@@ -19,13 +19,13 @@ import cv2
 
 #import pyheif
 
+import subprocess
+import sys
+
 import matplotlib.pyplot as plt
 
 from PIL import Image
 
-
-
-from Importar_Instalar import check_and_install
 
 def nombres(directorio):
     """
@@ -68,58 +68,33 @@ def convertir_persona_HIEC_a_jpg(ruta_persona):
         
                
 
-import os
-import glob
-import cv2
-import numpy as np
-import pickle
-
-def guardar_lote(nombre_persona, batch, indice_lote, directorio_destino):
+def Leer_fotos(directorio_origen_f):
     """
-    Guarda un lote de imágenes procesadas en un archivo.
-
-    Args:
-        nombre_persona (str): Nombre de la persona asociada a las imágenes.
-        batch (list): Lista de imágenes procesadas.
-        indice_lote (int): Índice del lote actual.
-        directorio_destino (str): Directorio donde se guardarán los lotes.
+        Lee la ruta lee interpretando que cada carpeta es una persona, y dentro de esa careta se encuentran las fotos de esa persona.
+        Devuelve un diccionario con el nombre de la pesrona como índice y una lista de sus fotos.
     """
-    os.makedirs(directorio_destino, exist_ok=True)
-    archivo_salida = os.path.join(directorio_destino, f"{nombre_persona}_lote_{indice_lote}.pkl")
 
-    with open(archivo_salida, "wb") as f:
-        pickle.dump(batch, f)
+    # Diccionario para almacenar las fotos
+    fotos_int= {} # diccionario interno q sea persona y el vector de fotos, 
 
-def leer_fotos_y_guardar_por_lotes(directorio_origen_f, directorio_destino, batch_size=100):
-    """
-    Lee fotos de cada persona por lotes y las guarda en archivos para optimizar memoria.
+    # Recorrer las subcarpetas
 
-    Args:
-        directorio_origen_f (str): Ruta del directorio que contiene subcarpetas con fotos organizadas por persona.
-        directorio_destino (str): Ruta del directorio donde se guardarán los lotes procesados.
-        batch_size (int): Número máximo de imágenes a procesar por lote.
-    """
     for nombre_persona in os.listdir(directorio_origen_f):
+        # Ruta de la subcarpeta
         ruta_persona = os.path.join(directorio_origen_f, nombre_persona)
 
-        if not os.path.isdir(ruta_persona):
-            continue
-
-        # Convertir HEIC a JPG si es necesario
+        # Lista para almacenar las fotos de la persona
+        fotos_persona = []    
+        #convertir hiec a png
         convertir_persona_HIEC_a_jpg(ruta_persona)
-
-        # Recopilar las rutas de las imágenes
-        rutas_imagenes = glob.glob(os.path.join(ruta_persona, "*.jp*g"))
-
-        for i in range(0, len(rutas_imagenes), batch_size):
-            batch_rutas = rutas_imagenes[i:i + batch_size]
-            
-            # Procesar solo el batch actual
-            batch_imagenes = [cv2.imencode('.jpg', cv2.imread(ruta))[1] for ruta in batch_rutas]
-
-            # Guardar el lote
-            guardar_lote(nombre_persona, batch_imagenes, i // batch_size, directorio_destino)
-
+        # Recorrer las fotos de la persona
+        for archivo in glob.glob(os.path.join(ruta_persona, "*.jp*g")) :
+            # Cargar la imagen
+            imagen = cv2.imread(archivo)              
+            fotos_persona.append(imagen)             
+        fotos_int[nombre_persona] = fotos_persona
+        
+    return fotos_int
 
 
 
@@ -245,6 +220,53 @@ def recortar_imagen(image):
         face_images.append(image[y:y+h, x:x+w])
 
     return face_images
+
+
+
+def procesar_carpetas(directorio_origen, directorio_destino):
+    # Iterar sobre las carpetas dentro del directorio
+
+    # Crea el directorio si no existe
+    if not os.path.exists(directorio_destino):
+       os.makedirs(directorio_destino)
+
+    for root, dirs, files in os.walk(directorio_origen):
+        for dir_name in dirs:
+            print("Carpeta:", dir_name)
+            dir_path = os.path.join(root, dir_name) #directorio origen de la persona 
+            dir_path_recorte = os.path.join(directorio_destino, dir_name) #directorio destino de la persona
+            
+            if not os.path.exists(dir_path_recorte):
+                os.makedirs(dir_path_recorte) #creamos carpetas para cada nombre
+            
+            images = []
+
+            numero=0 #numero de la foto dentro del directorio
+            
+            for file in glob.glob(os.path.join(dir_path, "*.jpg")) :
+                # Verificar si el archivo es una imagen
+                if file.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp')):
+                    # Leer la imagen
+                    #mage_path = os.path.join(dir_path, file)
+                    image_path = file
+                    print(image_path)
+                    image = cv2.imread(image_path)
+                    
+                    if image is not None:
+                        # Recortar la imagen
+                        numero +=1
+                        face_images = recortar_imagen(image)
+                        images.extend(face_images)
+                        numero_interno=0
+                        for face_image in face_images:
+                            gray_image = cv2.cvtColor(face_image, cv2.COLOR_BGR2GRAY)
+                            numero_interno +=1
+                            numero_formateado = str(numero).zfill(2)
+                            numero_interno_formateado = str(numero_interno).zfill(2)
+                            #_{image_path.split('.')[0]}_
+                            output_path = os.path.join(dir_path_recorte , f"{dir_name}_{numero_formateado}_{numero_interno_formateado}.jpg")
+                            # Save the cropped face to the output directory                       
+                            cv2.imwrite(output_path, gray_image)
 
 
 
@@ -410,4 +432,12 @@ def backpropagation(X, Y, Z1, A1, Z2, A2, W1, W2, b1, b2, learning_rate):
     return W1, b1, W2, b2
 
 
+def check_and_install(package):
+    try:
+        # Intentar importar el paquete
+        __import__(package)
+    except ImportError:
+        # Si falla la importación, instalar el paquete usando pip
+        print(f"{package} no está instalado. Instalando...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
