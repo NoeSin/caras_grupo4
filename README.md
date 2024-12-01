@@ -17,13 +17,14 @@ __2.__ Ejecutar el script scripts\WF02_Recortar_caras.ipynb: Esta recorre las nu
 __3.__ Ejecutar el script scripts\WF03_Pca_bp.ipynb: Esta recupera las imagenes en "../Caras_cortadas" aplica un pca con las 60 componentes a partir del elemento dos y guarda los elementos generados. Luego se aplica un modelo de red neuronal utilizando back propagation para realizar la clasificación y entrenar el modelo, recibe como entrada los componentes principales resultantes de PCA. Por último se almacenan los pesos y biases del modelo obtenido.
 
 __4.__ Ejecutar por terminal scripts\WF04_Identificar_alumno.py: Este realiza la detección de cara, realiza transformaciones correspondientes y aplica pca de acuerdo a lo almacenado en los scripts anteriores, por último realiza la clasificación a través del modelo almacenado.
+
    __--> 4.1__ Hacer click en "Cargar foto" y subir la foto de la persona que quieres identificar.
    __--> 4.2__ Hacer click en "Quien es?" para saber el resultado.
 
    
 ### Opción2: Identificar el alumno correspondiente a una foto
   
-   __4.__ Ejecutar por terminal scripts\WF04_Identificar_alumno.py (Punto 4 de la opción1)
-
-    __--> 4.1__ Hacer click en "Cargar foto" y subir la foto de la persona que quieres identificar.
-    __--> 4.2__ Hacer click en "Quien es?" para saber el resultado.
+   __4.__ Ejecutar por terminal scripts\WF04_Identificar_alumno.py (Punto 4 de la opción1).
+   __--> 4.1__ Hacer click en "Cargar foto" y subir la foto de la persona que quieres identificar.
+   __--> 4.2__ Hacer click en "Quien es?" para saber el resultado.
+ 
