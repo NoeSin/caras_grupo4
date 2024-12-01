@@ -9,7 +9,6 @@ import glob
 import cv2
 import glob
 import pickle
-#from Importar_Instalar import check_and_install
 import subprocess
 import sys
 
@@ -90,6 +89,8 @@ def leer_fotos_y_guardar_por_lotes(directorio_origen_f, directorio_destino, batc
         directorio_destino (str): Ruta del directorio donde se guardarán los lotes procesados.
         batch_size (int): Número máximo de imágenes a procesar por lote.
     """
+    
+    
     for nombre_persona in os.listdir(directorio_origen_f):
         ruta_persona = os.path.join(directorio_origen_f, nombre_persona)
 
