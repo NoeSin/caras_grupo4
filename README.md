@@ -18,13 +18,17 @@ __3.__ Ejecutar el script scripts\WF03_Pca_bp.ipynb: Esta recupera las imagenes 
 
 __4.__ Ejecutar por terminal scripts\WF04_Identificar_alumno.py: Este realiza la detección de cara, realiza transformaciones correspondientes y aplica pca de acuerdo a lo almacenado en los scripts anteriores, por último realiza la clasificación a través del modelo almacenado.
 
-   __--> 4.1__ Hacer click en "Cargar foto" y subir la foto de la persona que quieres identificar.
-   __--> 4.2__ Hacer click en "Quien es?" para saber el resultado.
+
+   __4.1__ Hacer click en "Cargar foto" y subir la foto de la persona que quieres identificar.
+
+   
+   __4.2__ Hacer click en "Quien es?" para saber el resultado.
 
    
 ### Opción2: Identificar el alumno correspondiente a una foto
-  
-   __4.__ Ejecutar por terminal scripts\WF04_Identificar_alumno.py (Punto 4 de la opción1).
-   __--> 4.1__ Hacer click en "Cargar foto" y subir la foto de la persona que quieres identificar.
-   __--> 4.2__ Hacer click en "Quien es?" para saber el resultado.
+__4.__ Ejecutar por terminal scripts\WF04_Identificar_alumno.py (Punto 4 de la opción1).
+
+   __4.1__ Hacer click en "Cargar foto" y subir la foto de la persona que quieres identificar.
+   
+   __4.2__ Hacer click en "Quien es?" para saber el resultado.
  
